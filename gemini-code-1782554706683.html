@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Thiết Kế Bài Tập Tiếng Anh 9 - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght=400;700;900&family=Quicksand:wght=500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --accent-yellow: #FDCB6E;
+            --accent-teal: #00C9A7;
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --card-bg: #ffffff;
+            --text-main: #2D3436;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #FF7675);
+            background-size: 400% 400%;
+            animation: gradientAnimation 12s ease infinite;
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.18;
+        }
+
+        .header-container {
+            text-align: center;
+            padding: 20px 10px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-container h5 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+        }
+
+        .warning-box {
+            background: #ffffff;
+            color: #2D3436;
+            max-width: 680px;
+            margin: 10px auto;
+            padding: 20px;
+            border-radius: 24px;
+            border: 4px solid var(--accent-yellow);
+            box-shadow: 0 8px 0 var(--accent-yellow);
+            text-align: center;
+        }
+
+        .warning-box h3 {
+            margin-top: 0;
+            color: #E67E22;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .warning-box p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 6px 0;
+            font-weight: 700;
+        }
+
+        .scroll-reminder {
+            color: #8854C0;
+            font-style: italic;
+            animation: bounce 1.4s infinite;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .progress-container {
+            max-width: 720px;
+            margin: 15px auto;
+            padding: 0 15px;
+        }
+        .progress-bar-wrapper {
+            background: rgba(255,255,255,0.35);
+            border-radius: 15px;
+            height: 16px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #00D26A, #00C9A7);
+            border-radius: 15px;
+            transition: width 0.4s ease;
+        }
+
+        .quiz-container {
+            max-width: 720px;
+            margin: 0 auto 40px auto;
+            padding: 0 15px;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            border: 3px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .category-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 900;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid #E4E7EB;
+            border-radius: 18px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 0 #E4E7EB;
+            transition: all 0.12s ease;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            transform: scale(1.015) translateY(-2px);
+            box-shadow: 0 7px 0 #CED6E0;
+            border-color: #A4B0BE;
+        }
+
+        .option-btn:active:not(.disabled) {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #CED6E0;
+        }
+
+        .option-prefix {
+            background: #F1F2F6;
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            margin-right: 12px;
+            font-weight: 900;
+            color: #57606F;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct {
+            background-color: var(--correct-color) !important;
+            color: white !important;
+            border-color: #00A854 !important;
+            box-shadow: 0 5px 0 #00A854 !important;
+        }
+        .option-btn.correct .option-prefix {
+            background: rgba(255,255,255,0.35) !important;
+            color: white !important;
+        }
+
+        .option-btn.wrong {
+            background-color: var(--wrong-color) !important;
+            color: white !important;
+            border-color: #D63031 !important;
+            box-shadow: 0 5px 0 #D63031 !important;
+        }
+        .option-btn.wrong .option-prefix {
+            background: rgba(255,255,255,0.35) !important;
+            color: white !important;
+        }
+
+        .shake { animation: shakeAnim 0.4s ease-in-out; }
+        @keyframes shakeAnim {
+            0%, 100% { transform: translateX(0); }
+            25%, 75% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); }
+        }
+
+        .gap-sentence {
+            font-size: 16px; line-height: 2.2; font-weight: 700;
+            margin-bottom: 18px; background: #F8F9FA;
+            padding: 15px; border-radius: 16px;
+            border-left: 5px solid var(--primary-color);
+        }
+        .gap-blank {
+            display: inline-block; min-width: 110px; height: 34px;
+            line-height: 30px; background: #FFEAA7;
+            border: 2px dashed #FDCB6E; border-radius: 10px;
+            text-align: center; cursor: pointer; color: #D63031;
+            padding: 0 12px; margin: 0 6px; vertical-align: middle;
+            transition: all 0.2s;
+        }
+        .gap-blank:hover { background: #FFF2CC; transform: scale(1.04); }
+        .gap-blank.filled-correct { background: var(--correct-color); color: white; border-style: solid; border-color: #00A854; }
+        .gap-blank.filled-wrong { background: var(--wrong-color); color: white; border-style: solid; border-color: #D63031; }
+
+        .explanation-box {
+            margin-top: 18px; padding: 18px;
+            background-color: #F9F2FF; border-left: 6px solid var(--primary-color);
+            border-radius: 12px; font-size: 14px; line-height: 1.6;
+            display: none; animation: fadeIn 0.35s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .exp-title { color: var(--primary-color); font-weight: 900; margin-bottom: 8px; font-size: 15px; }
+
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.45); z-index: 1000;
+            display: none; align-items: center; justify-content: center;
+        }
+        .popup-content {
+            background: white; padding: 25px; border-radius: 24px;
+            max-width: 90%; width: 400px; box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+            text-align: center; border: 4px solid var(--primary-color);
+            animation: popScale 0.2s ease-out;
+        }
+        @keyframes popScale { from { transform: scale(0.75); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .popup-title { font-weight: 900; font-size: 16px; margin-bottom: 15px; color: var(--primary-color); }
+        .popup-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 250px; overflow-y: auto; padding: 5px; }
+        .popup-opt-btn { background: #F1F2F6; border: 2px solid #CED6E0; padding: 10px; font-weight: 700; border-radius: 12px; cursor: pointer; box-shadow: 0 3px 0 #CED6E0; font-size: 13px; }
+        .popup-opt-btn:hover { background: #E4E7EB; }
+
+        .submit-btn-wrapper { text-align: center; margin: 40px 0; }
+        .submit-all-btn { background: #FF7675; color: white; border: none; border-radius: 25px; padding: 15px 45px; font-size: 18px; font-weight: 900; cursor: pointer; box-shadow: 0 7px 0 #E25E5E; transition: all 0.2s; }
+        .submit-all-btn:hover { transform: scale(1.04) translateY(-2px); box-shadow: 0 9px 0 #E25E5E; }
+
+        .result-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; }
+        .result-box { background: white; padding: 35px; border-radius: 32px; max-width: 520px; width: 90%; text-align: center; border: 6px solid var(--accent-teal); }
+        .result-score { font-size: 45px; font-weight: 900; color: var(--primary-color); margin: 12px 0; }
+        .result-comment { font-size: 15px; line-height: 1.6; font-weight: 700; color: #2D3436; background: #F1F2F6; padding: 15px; border-radius: 16px; margin-bottom: 20px; }
+        .close-result-btn { background: var(--accent-teal); color: white; border: none; padding: 12px 30px; border-radius: 20px; font-weight: 900; cursor: pointer; box-shadow: 0 5px 0 #00A387; }
+
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1500; pointer-events: none; }
+        u { text-decoration: underline; color: #E74C3C; font-weight: 900; }
+        b { color: #2D3436; }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <svg class="bg-pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <defs>
+            <pattern id="shapes" width="100" height="100" patternUnits="userSpaceOnUse">
+                <path d="M20,5 L23,13 L32,13 L25,18 L27,27 L20,22 L13,27 L15,18 L8,13 L17,13 Z" fill="#FFF" opacity="0.35" transform="translate(10,10) scale(0.5)"/>
+                <circle cx="60" cy="60" r="5" fill="#FFF" opacity="0.4"/>
+                <path d="M70,20 C73,15 82,15 85,20 C89,19 95,24 93,29 C96,34 91,40 85,38 C82,42 73,42 70,38 C65,39 61,33 64,29 C61,24 66,19 70,20 Z" fill="#FFF" opacity="0.25" transform="translate(-20,10) scale(0.5)"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#shapes)" />
+    </svg>
+
+    <div class="header-container">
+        <h5>Giáo viên tạo: Ms Lê Hằng English</h5>
+        <div class="warning-box">
+            <h3>⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</h3>
+            <p>Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.</p>
+            <p>Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!</p>
+            <p class="scroll-reminder">* Kéo tới đâu, làm tới đó! *</p>
+        </div>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar-wrapper">
+            <div id="quiz-progress" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div id="quiz-cards-wrapper" class="quiz-container"></div>
+
+    <div class="submit-btn-wrapper">
+        <button class="submit-all-btn" onclick="showFinalScore()">🎉 NỘP BÀI TỔNG KẾT 🎉</button>
+    </div>
+
+    <div id="gap-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-title">Chọn đáp án đúng điền vào ô trống:</div>
+            <div id="popup-options-container" class="popup-options"></div>
+        </div>
+    </div>
+
+    <div id="result-modal" class="result-modal">
+        <div class="result-box">
+            <h2>Kết Quả Của Con</h2>
+            <div id="score-text" class="result-score">0 / 0</div>
+            <div id="comment-text" class="result-comment"></div>
+            <button class="close-result-btn" onclick="closeResultModal()">Đóng và xem lại</button>
+        </div>
+    </div>
+
+    <script>
+        const originalQuestions = [
+  {
+    "id": "ex4_1",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "Sharing both positive and negative feelings with friends can be a helpful way to improve your ___ (1) ___ health.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "mental",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Sẻ chia cả cảm xúc tích cực và tiêu cực với bạn bè là một cách hữu ích để cải thiện sức khỏe tinh thần (mental health) của con.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn mental?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_2",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "When making financial decisions, it is important to give ___ (2) ___ to essential expenses like food and clothes.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "priority",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Khi đưa ra các quyết định tài chính, điều quan trọng là phải dành sự ưu tiên (give priority to) cho các chi phí thiết yếu như thức ăn và quần áo.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn priority?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_3",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "Eating too much ___ (3) ___ food can make you gain weight fast.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "fattening",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Ăn quá nhiều thức ăn gây béo (fattening food) có thể khiến con tăng cân nhanh chóng.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn fattening?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_4",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "The team had to ___ (4) ___ the meeting until next week due to an emergency.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "delay",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Đội ngũ đã phải hoãn (delay) cuộc họp cho đến tuần tới vì một trường hợp khẩn cấp.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn delay?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_5",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "They needed ___ (5) ___ time to discuss the situation before making final decisions.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "additional",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Họ đã cần thêm (additional) thời gian để thảo luận về tình huống trước khi đưa ra các quyết định cuối cùng.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn additional?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_6",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "The therapist gave her some tips to reduce her ___ (6) ___ levels.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "anxiety",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Chuyên gia trị liệu đã đưa cho cô ấy một vài lời khuyên để giảm bớt mức độ lo âu (anxiety levels).<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn anxiety?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_7",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "Thanks to great planning and hard work, she was able to ___ (7) ___ her goals.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "accomplish",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Nhờ vào việc lên kế hoạch tuyệt vời và sự chăm chỉ, cô ấy đã có thể hoàn thành/đạt được (accomplish) các mục tiêu của mình.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn accomplish?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_8",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "The ___ (8) ___ provides support and advice to students who are facing academic difficulties.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "counsellor",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Người cố vấn/thầy cô tâm lý (counsellor) cung cấp sự hỗ trợ và lời khuyên cho những học sinh đang gặp khó khăn trong học tập.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất An.<br><br>\n            <b>3. Tại sao chọn counsellor?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_9",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "He enjoyed the ___ (9) ___ challenge of climbing up the high mountain.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "physical",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Cậu ấy rất thích thử thách thể chất (physical challenge) của việc leo lên ngọn núi cao.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn physical?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex4_10",
+    "type": "gap_fill",
+    "category": "Exercise 4: Complete the sentences",
+    "question": "To maintain a healthy lifestyle, it’s important to have a ___ (10) ___ diet with a lot of vegetables and fruits.",
+    "options": ["physical", "priority", "counsellor", "mental", "additional", "delay", "accomplish", "anxiety", "well-balanced", "fattening"],
+    "correctText": "well-balanced",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu:</b> Để duy trì một lối sống lành mạnh, điều quan trọng là phải có một chế độ ăn uống cân bằng hợp lý (well-balanced diet) với nhiều rau và trái cây.<br><br>\n            <b>2. Phân tích từ vựng cả 4 phương án tiêu biểu:</b><br>\n            - <i>mental (adj):</i> thuộc về tinh thần, tâm lý.<br>\n            - <i>physical (adj):</i> thuộc về thể chất, cơ thể.<br>\n            - <i>priority (n):</i> sự ưu tiên hàng đầu.<br>\n            - <i>anxiety (n):</i> sự lo lắng, bất an.<br><br>\n            <b>3. Tại sao chọn well-balanced?</b> Dựa vào ngữ cảnh ngữ nghĩa của các từ khóa đi kèm trong câu để chọn từ thích hợp nhất.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Đặt các từ khác vào sẽ làm sai lệch hoàn toàn logic ngữ nghĩa của câu văn.\n        "
+  },
+  {
+    "id": "ex5_1",
+    "type": "mcq",
+    "category": "Exercise 5: Word Closest in Meaning (Từ đồng nghĩa)",
+    "question": "Choose the word CLOSEST in meaning to the underlined word:<br><b>Achieving fitness goals, like running a mile or doing yoga, leaves teens feeling <u>accomplished</u>.</b>",
+    "options": ["mental", "stressed", "finished", "optimistic"],
+    "correctText": "finished",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Đạt được các mục tiêu thể hình, như chạy một dặm hoặc tập yoga, khiến thanh thiếu niên cảm thấy đã hoàn thành/đạt được thành tựu. Từ đồng nghĩa gần nhất trong ngữ cảnh này của accomplished là finished (hoàn thành).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. mental<br>\n            - B. stressed<br>\n            - C. finished<br>\n            - D. optimistic<br><br>\n            <b>3. Tại sao chọn finished?</b> Vì đây là từ phản ánh sát nhất và chính xác nhất nét nghĩa của từ được gạch chân trong ngữ cảnh câu văn.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Vì chúng mang ý nghĩa hoàn toàn khác biệt hoặc không tương đồng ngữ cảnh.\n        "
+  },
+  {
+    "id": "ex5_2",
+    "type": "mcq",
+    "category": "Exercise 5: Word Closest in Meaning (Từ đồng nghĩa)",
+    "question": "Choose the word CLOSEST in meaning to the underlined word:<br><b>You may not be able to identify if your teenager is <u>stressed</u> or is just being a “teen”.</b>",
+    "options": ["tensed", "worried", "depressed", "terrible"],
+    "correctText": "tensed",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Con có thể không xác định được liệu con mình đang bị căng thẳng (stressed) hay chỉ đang cư xử như một 'thiếu niên' bình thường. Từ đồng nghĩa gần nhất với stressed ở đây là tensed (căng thẳng, căng như dây đàn).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. tensed<br>\n            - B. worried<br>\n            - C. depressed<br>\n            - D. terrible<br><br>\n            <b>3. Tại sao chọn tensed?</b> Vì đây là từ phản ánh sát nhất và chính xác nhất nét nghĩa của từ được gạch chân trong ngữ cảnh câu văn.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Vì chúng mang ý nghĩa hoàn toàn khác biệt hoặc không tương đồng ngữ cảnh.\n        "
+  },
+  {
+    "id": "ex5_3",
+    "type": "mcq",
+    "category": "Exercise 5: Word Closest in Meaning (Từ đồng nghĩa)",
+    "question": "Choose the word CLOSEST in meaning to the underlined word:<br><b>Teens who engage in regular physical activity often feel <u>delighted</u> and energized.</b>",
+    "options": ["embarrassed", "disappointed", "worried", "pleased"],
+    "correctText": "pleased",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Thanh thiếu niên tham gia hoạt động thể chất đều đặn thường cảm thấy rất vui mừng/vui vẻ (delighted) và tràn đầy năng lượng. Đồng nghĩa với delighted là pleased (hài lòng, vui vẻ).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. embarrassed<br>\n            - B. disappointed<br>\n            - C. worried<br>\n            - D. pleased<br><br>\n            <b>3. Tại sao chọn pleased?</b> Vì đây là từ phản ánh sát nhất và chính xác nhất nét nghĩa của từ được gạch chân trong ngữ cảnh câu văn.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Vì chúng mang ý nghĩa hoàn toàn khác biệt hoặc không tương đồng ngữ cảnh.\n        "
+  },
+  {
+    "id": "ex5_4",
+    "type": "mcq",
+    "category": "Exercise 5: Word Closest in Meaning (Từ đồng nghĩa)",
+    "question": "Choose the word CLOSEST in meaning to the underlined word:<br><b>Making health a <u>priority</u> ensures that teens allocate time for exercise and nutritious meals.</b>",
+    "options": ["precedence", "deadline", "distraction", "anxiety"],
+    "correctText": "precedence",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Coi sức khỏe là một sự ưu tiên (priority) đảm bảo rằng thanh thiếu niên phân bổ thời gian cho việc tập thể dục và các bữa ăn bổ dưỡng. Đồng nghĩa với priority là precedence (quyền ưu tiên trước).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. precedence<br>\n            - B. deadline<br>\n            - C. distraction<br>\n            - D. anxiety<br><br>\n            <b>3. Tại sao chọn precedence?</b> Vì đây là từ phản ánh sát nhất và chính xác nhất nét nghĩa của từ được gạch chân trong ngữ cảnh câu văn.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Vì chúng mang ý nghĩa hoàn toàn khác biệt hoặc không tương đồng ngữ cảnh.\n        "
+  },
+  {
+    "id": "ex5_5",
+    "type": "mcq",
+    "category": "Exercise 5: Word Closest in Meaning (Từ đồng nghĩa)",
+    "question": "Choose the word CLOSEST in meaning to the underlined word:<br><b>Teens experiencing <u>anxiety</u> can benefit from mindfulness practices and seeking professional support.</b>",
+    "options": ["nervousness", "counsellor", "mood", "priority"],
+    "correctText": "nervousness",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Thanh thiếu niên trải qua sự lo âu (anxiety) có thể nhận được lợi ích từ các bài tập chánh niệm và việc tìm kiếm sự hỗ trợ chuyên nghiệp. Đồng nghĩa với anxiety là nervousness (sự lo lắng, bồn chồn).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. nervousness<br>\n            - B. counsellor<br>\n            - C. mood<br>\n            - D. priority<br><br>\n            <b>3. Tại sao chọn nervousness?</b> Vì đây là từ phản ánh sát nhất và chính xác nhất nét nghĩa của từ được gạch chân trong ngữ cảnh câu văn.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Vì chúng mang ý nghĩa hoàn toàn khác biệt hoặc không tương đồng ngữ cảnh.\n        "
+  },
+  {
+    "id": "ex6_1",
+    "type": "mcq",
+    "category": "Exercise 6: Word OPPOSITE in Meaning (Từ trái nghĩa)",
+    "question": "Choose the word OPPOSITE in meaning to the underlined word:<br><b>The team had to <u>delay</u> the meeting until next week due to an emergency.</b>",
+    "options": ["put on", "take on", "turn down", "go on"],
+    "correctText": "go on",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Đội ngũ đã phải trì hoãn (delay) cuộc họp cho đến tuần tới vì tình huống khẩn cấp. Từ trái nghĩa với trì hoãn là go on (tiếp tục diễn ra ngay liền mạch).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. put on<br>\n            - B. take on<br>\n            - C. turn down<br>\n            - D. go on<br><br>\n            <b>3. Tại sao chọn go on?</b> Vì nét nghĩa của từ này đối lập hoàn toàn 180 độ với từ được gạch chân.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Các phương án khác hoặc là từ đồng nghĩa, hoặc là không có mối quan hệ đối lập nghĩa.\n        "
+  },
+  {
+    "id": "ex6_2",
+    "type": "mcq",
+    "category": "Exercise 6: Word OPPOSITE in Meaning (Từ trái nghĩa)",
+    "question": "Choose the word OPPOSITE in meaning to the underlined word:<br><b>Managing schoolwork, extracurricular activities, and social life can leave teens feeling <u>stressed out</u>.</b>",
+    "options": ["pleased", "relaxed", "frightened", "tensed"],
+    "correctText": "relaxed",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Quản lý bài vở ở trường, các hoạt động ngoại khóa và đời sống xã hội có thể khiến thanh thiếu niên cảm thấy bị căng thẳng kiệt sức (stressed out). Từ trái nghĩa hoàn toàn với căng thẳng là relaxed (thư giãn, thoải mái).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. pleased<br>\n            - B. relaxed<br>\n            - C. frightened<br>\n            - D. tensed<br><br>\n            <b>3. Tại sao chọn relaxed?</b> Vì nét nghĩa của từ này đối lập hoàn toàn 180 độ với từ được gạch chân.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Các phương án khác hoặc là từ đồng nghĩa, hoặc là không có mối quan hệ đối lập nghĩa.\n        "
+  },
+  {
+    "id": "ex6_3",
+    "type": "mcq",
+    "category": "Exercise 6: Word OPPOSITE in Meaning (Từ trái nghĩa)",
+    "question": "Choose the word OPPOSITE in meaning to the underlined word:<br><b>If you practise good posture, you can appear more <u>confident</u>.</b>",
+    "options": ["additional", "distrustful", "calm", "delighted"],
+    "correctText": "distrustful",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Nếu con thực hành tư thế ngồi/đứng tốt, con có thể trông tự tin (confident) hơn. Từ trái nghĩa với tự tin, tin tưởng là distrustful (hay nghi ngờ, thiếu tự tin, không tin cậy).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. additional<br>\n            - B. distrustful<br>\n            - C. calm<br>\n            - D. delighted<br><br>\n            <b>3. Tại sao chọn distrustful?</b> Vì nét nghĩa của từ này đối lập hoàn toàn 180 độ với từ được gạch chân.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Các phương án khác hoặc là từ đồng nghĩa, hoặc là không có mối quan hệ đối lập nghĩa.\n        "
+  },
+  {
+    "id": "ex6_4",
+    "type": "mcq",
+    "category": "Exercise 6: Word OPPOSITE in Meaning (Từ trái nghĩa)",
+    "question": "Choose the word OPPOSITE in meaning to the underlined word:<br><b>Some teens may feel <u>pessimistic</u> about their body image, but focusing on positive aspects helps build confidence.</b>",
+    "options": ["optimistic", "inexpensive", "unhealthy", "unwealthy"],
+    "correctText": "optimistic",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Một số bạn trẻ có thể cảm thấy bi quan (pessimistic) về hình ảnh cơ thể của mình, nhưng tập trung vào các khía cạnh tích cực sẽ giúp xây dựng sự tự tin. Từ trái nghĩa với bi quan là optimistic (lạc quan).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. optimistic<br>\n            - B. inexpensive<br>\n            - C. unhealthy<br>\n            - D. unwealthy<br><br>\n            <b>3. Tại sao chọn optimistic?</b> Vì nét nghĩa của từ này đối lập hoàn toàn 180 độ với từ được gạch chân.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Các phương án khác hoặc là từ đồng nghĩa, hoặc là không có mối quan hệ đối lập nghĩa.\n        "
+  },
+  {
+    "id": "ex6_5",
+    "type": "mcq",
+    "category": "Exercise 6: Word OPPOSITE in Meaning (Từ trái nghĩa)",
+    "question": "Choose the word OPPOSITE in meaning to the underlined word:<br><b>You should follow these simple strategies to <u>overcome</u> stress.</b>",
+    "options": ["control", "get over", "manage", "fail"],
+    "correctText": "fail",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu và từ gạch chân:</b> Con nên làm theo các chiến lược đơn giản này để vượt qua (overcome) căng thẳng thành công. Trái nghĩa với vượt qua thành công là fail (thất bại).<br><br>\n            <b>2. Khảo sát nghĩa 4 đáp án:</b><br>\n            - A. control<br>\n            - B. get over<br>\n            - C. manage<br>\n            - D. fail<br><br>\n            <b>3. Tại sao chọn fail?</b> Vì nét nghĩa của từ này đối lập hoàn toàn 180 độ với từ được gạch chân.<br><br>\n            <b>4. Tại sao các đáp án khác SAI?</b> Các phương án khác hoặc là từ đồng nghĩa, hoặc là không có mối quan hệ đối lập nghĩa.\n        "
+  },
+  {
+    "id": "ex8_1",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If teenagers don’t eat healthy food, they <b>(should / may)</b> experience health problems later.</b>",
+    "options": ["should", "may"],
+    "correctText": "may",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu thanh thiếu niên không ăn thức ăn lành mạnh, họ có thể (may) gặp các vấn đề về sức khỏe sau này. Dùng 'may' chỉ một khả năng có thể xảy ra ở tương lai.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn may?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_2",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>Your parents <b>(aren’t / won’t be)</b> happy if you can’t finish your chores before playing video games.</b>",
+    "options": ["aren’t", "won’t be"],
+    "correctText": "won’t be",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Bố mẹ con sẽ không (won't be) vui đâu nếu con không thể hoàn thành việc nhà trước khi chơi trò chơi điện tử. Câu điều kiện loại 1 mệnh đề chính dùng tương lai đơn.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn won’t be?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_3",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>Henry <b>(mightn't / shouldn't)</b> make it to the party if he doesn't finish work on time.</b>",
+    "options": ["mightn't", "shouldn't"],
+    "correctText": "mightn't",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Henry có thể sẽ không (mightn't) đến dự tiệc kịp nếu cậu ấy không hoàn thành công việc đúng giờ. Diễn tả khả năng không chắc chắn ở điều kiện loại 1.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn mightn't?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_4",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If Jordan runs a bit faster, I guess he <b>(might / should)</b> win the race.</b>",
+    "options": ["might", "should"],
+    "correctText": "might",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu Jordan chạy nhanh hơn một chút, tớ đoán cậu ấy có thể (might) thắng cuộc đua. Có từ 'I guess' (tớ đoán) thể hiện sự không chắc chắn cao nên dùng might.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn might?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_5",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If students break the rules, they <b>(may / will)</b> definitely be sent to the principal's office.</b>",
+    "options": ["may", "will"],
+    "correctText": "will",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu học sinh vi phạm nội quy, họ chắc chắn sẽ (will) bị đưa đến văn phòng hiệu trưởng. Từ 'definitely' (chắc chắn) ép buộc dùng tương lai đơn 'will'.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn will?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_6",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If you don't put on sunscreen when going to the beach, you <b>(will / won't)</b> get sunburned.</b>",
+    "options": ["will", "won't"],
+    "correctText": "will",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu con không bôi kem chống nắng khi đi biển, con sẽ (will) bị cháy nắng đấy.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn will?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_7",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If it rains tomorrow, the teenagers <b>(mustn’t / must)</b> wear raincoats to school.</b>",
+    "options": ["mustn’t", "must"],
+    "correctText": "must",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu trời mưa vào ngày mai, các bạn thiếu niên phải (must) mặc áo mưa đến trường học.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn must?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_8",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>They <b>(might / should)</b> understand the new concept better if they study together.</b>",
+    "options": ["might", "should"],
+    "correctText": "should",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Họ nên/sẽ (should) hiểu khái niệm mới tốt hơn nếu họ cùng nhau học tập. Chỉ một kết quả hợp lý hoặc lời khuyên.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn should?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_9",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>You’ll feel hungry before lunch if you <b>(won’t eat / don’t eat)</b> breakfast.</b>",
+    "options": ["won’t eat", "don’t eat"],
+    "correctText": "don’t eat",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Con sẽ thấy đói trước bữa trưa nếu con không ăn (don't eat) bữa sáng. Mệnh đề IF của điều kiện loại 1 chia hiện tại đơn.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn don’t eat?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_10",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If house prices go down this year, my family <b>(must / may)</b> buy a house by the sea.</b>",
+    "options": ["must", "may"],
+    "correctText": "may",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu giá nhà giảm trong năm nay, gia đình tớ có thể (may) sẽ mua một ngôi nhà cạnh bờ biển. Diễn tả một khả năng có thể xảy ra dựa trên dự định chưa chắc chắn.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn may?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_11",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If it rains heavily tomorrow, I'm afraid we <b>(should / ought to)</b> cancel our camping trip.</b>",
+    "options": ["should", "ought to"],
+    "correctText": "should",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu ngày mai trời mưa to, tớ e rằng chúng ta nên (should) hủy chuyến cắm trại thôi.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn should?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_12",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>All electrical appliances <b>(may / must)</b> be switched off when they're not in use if you want to save electricity and money on your energy bill.</b>",
+    "options": ["may", "must"],
+    "correctText": "must",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Tất cả các thiết bị điện phải (must) được tắt khi không sử dụng nếu con muốn tiết kiệm điện và tiền bạc.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn must?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_13",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If the team trains hard, they <b>(will / should)</b> have a chance of winning the competition.</b>",
+    "options": ["will", "should"],
+    "correctText": "will",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu đội tuyển tập luyện chăm chỉ, họ sẽ (will) có cơ hội giành chiến thắng trong cuộc thi.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn will?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_14",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>You <b>(can / may not)</b> improve your skills if you practice playing guitar every day.</b>",
+    "options": ["can", "may not"],
+    "correctText": "can",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Con có thể (can) cải thiện các kỹ năng của mình nếu con luyện tập chơi đàn guitar mỗi ngày.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn can?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_15",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If a dog bites you, you <b>(will / ought to)</b> wash the bite carefully with soap and water.</b>",
+    "options": ["will", "ought to"],
+    "correctText": "ought to",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu bị chó cắn, con nên (ought to) rửa vết cắn thật cẩn thận bằng xà phòng và nước sạch để sơ cứu.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn ought to?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_16",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>You <b>(should / will)</b> talk to your parents if you are in trouble or need some help.</b>",
+    "options": ["should", "will"],
+    "correctText": "should",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Con nên (should) nói chuyện với bố mẹ nếu con đang gặp rắc rối hoặc cần sự giúp đỡ.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn should?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_17",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>We <b>(won't / can't)</b> make Tom Yum soup if we don't have enough ingredients.</b>",
+    "options": ["won't", "can't"],
+    "correctText": "can't",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Chúng ta không thể (can't) nấu canh Tom Yum nếu chúng ta không có đủ các nguyên liệu cần thiết.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn can't?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_18",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If the train driver ignores the warning light, a terrible accident <b>(must / will)</b> happen.</b>",
+    "options": ["must", "will"],
+    "correctText": "will",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu người lái tàu phớt lờ đèn cảnh báo, một tai nạn khủng khiếp sẽ (will) xảy ra như một hệ quả tất yếu.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn will?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_19",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>The child <b>(should / will)</b> definitely die if nobody sends him to the hospital now.</b>",
+    "options": ["should", "will"],
+    "correctText": "will",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Đứa trẻ chắc chắn sẽ (will) nguy kịch nếu không ai đưa bé đến bệnh viện ngay bây giờ.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn will?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_20",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>Emily <b>(can / must)</b> buy the new phone she wants if she saves money.</b>",
+    "options": ["can", "must"],
+    "correctText": "can",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Emily có thể (can) mua chiếc điện thoại mới mà cô ấy muốn nếu cô ấy tiết kiệm tiền thành công.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn can?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_21",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>If Johnny exercises more, he <b>(must / might)</b> feel healthier.</b>",
+    "options": ["must", "might"],
+    "correctText": "might",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Nếu Johnny tập thể dục nhiều hơn, cậu ấy có thể (might) cảm thấy khỏe mạnh và sảng khoái hơn.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn might?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex8_22",
+    "type": "mcq",
+    "category": "Exercise 8: Circle the correct option in brackets",
+    "question": "Choose the correct word to complete the sentence:<br><b>She will probably fail if she <b>(doesn’t study / studies)</b> for the test.</b>",
+    "options": ["doesn’t study", "studies"],
+    "correctText": "doesn’t study",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Ý nghĩa ngữ cảnh toàn câu:</b> Cô ấy có lẽ sẽ trượt nếu cô ấy không học bài (doesn't study) cho bài kiểm tra.<br><br>\n            <b>2. Quy tắc áp dụng:</b> Câu điều kiện loại 1 kết hợp các động từ khuyết thiếu (Modal verbs) chỉ khả năng (can, may, might), nghĩa nghĩa vụ/khuyên bảo (must, should, ought to).<br><br>\n            <b>3. Tại sao chọn doesn’t study?</b> Vì nó đáp ứng hoàn toàn chính xác cả về mặt bản chất ngữ pháp câu điều kiện và ngữ nghĩa đời sống thực tế.<br><br>\n            <b>4. Tại sao đáp án còn lại SAI?</b> Vì làm câu bị sai cấu trúc thời thì hoặc tạo nên nét nghĩa không phù hợp logic.\n        "
+  },
+  {
+    "id": "ex9_1",
+    "type": "mcq",
+    "category": "Exercise 9: Find the Error (Tìm lỗi sai)",
+    "question": "Choose the underlined part that needs correction:<br><b>To maintain a healthy lifestyle, it is important to have a <u>well-balance</u> approach to work, rest, and leisure activities.</b>",
+    "options": ["healthy", "important", "well-balance", "work"],
+    "correctText": "well-balance",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản chất lỗi sai trong câu văn:</b> Sửa 'well-balance' thành 'well-balanced'. Trước danh từ 'approach' ta cần một tính từ ghép hoàn chỉnh có đuôi -ed đóng vai trò bổ ngữ tính chất.<br><br>\n            <b>2. Phân tích ngữ pháp các từ gạch chân khác:</b><br>\n            - Các phương án còn lại đều được chia đúng vị trí từ loại, thì thể ngữ pháp, không cần chỉnh sửa.<br><br>\n            <b>3. Cách sửa lại cho chuẩn xác 100%:</b> Học sinh cần lưu ý ghi lại cấu trúc/collocation này vào vở để tránh mắc các lỗi từ loại tương tự trong bài viết.\n        "
+  },
+  {
+    "id": "ex9_2",
+    "type": "mcq",
+    "category": "Exercise 9: Find the Error (Tìm lỗi sai)",
+    "question": "Choose the underlined part that needs correction:<br><b>Regular exercise like jogging, cycling, and dancing can greatly enhance <u>physic</u> health.</b>",
+    "options": ["like", "can", "greatly", "physic"],
+    "correctText": "physic",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản chất lỗi sai trong câu văn:</b> Sửa 'physic' thành 'physical'. Đựng trước danh từ 'health' bắt buộc phải là một tính từ chỉ thuộc tính thể chất 'physical health'.<br><br>\n            <b>2. Phân tích ngữ pháp các từ gạch chân khác:</b><br>\n            - Các phương án còn lại đều được chia đúng vị trí từ loại, thì thể ngữ pháp, không cần chỉnh sửa.<br><br>\n            <b>3. Cách sửa lại cho chuẩn xác 100%:</b> Học sinh cần lưu ý ghi lại cấu trúc/collocation này vào vở để tránh mắc các lỗi từ loại tương tự trong bài viết.\n        "
+  },
+  {
+    "id": "ex9_3",
+    "type": "mcq",
+    "category": "Exercise 9: Find the Error (Tìm lỗi sai)",
+    "question": "Choose the underlined part that needs correction:<br><b>When managing your tasks, you should <u>make</u> priority to the most urgent and important ones.</b>",
+    "options": ["managing", "make", "most", "important"],
+    "correctText": "make",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản chất lỗi sai trong câu văn:</b> Sửa 'make' thành 'give'. Ta có cụm cấu trúc cố định (Collocation) vô cùng quan trọng: 'give priority to something' có nghĩa là dành sự ưu tiên cho việc gì.<br><br>\n            <b>2. Phân tích ngữ pháp các từ gạch chân khác:</b><br>\n            - Các phương án còn lại đều được chia đúng vị trí từ loại, thì thể ngữ pháp, không cần chỉnh sửa.<br><br>\n            <b>3. Cách sửa lại cho chuẩn xác 100%:</b> Học sinh cần lưu ý ghi lại cấu trúc/collocation này vào vở để tránh mắc các lỗi từ loại tương tự trong bài viết.\n        "
+  },
+  {
+    "id": "ex9_4",
+    "type": "mcq",
+    "category": "Exercise 9: Find the Error (Tìm lỗi sai)",
+    "question": "Choose the underlined part that needs correction:<br><b>When feeling <u>stress</u> out, I find it helpful to talk to a close friend or family member about what’s bothering me.</b>",
+    "options": ["stress", "helpful", "a", "about"],
+    "correctText": "stress",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản chất lỗi sai trong câu văn:</b> Sửa 'stress' thành 'stressed'. Cụm phân từ đóng vai trò tính từ miêu tả cảm xúc con người bị áp lực, căng thẳng là 'stressed out'.<br><br>\n            <b>2. Phân tích ngữ pháp các từ gạch chân khác:</b><br>\n            - Các phương án còn lại đều được chia đúng vị trí từ loại, thì thể ngữ pháp, không cần chỉnh sửa.<br><br>\n            <b>3. Cách sửa lại cho chuẩn xác 100%:</b> Học sinh cần lưu ý ghi lại cấu trúc/collocation này vào vở để tránh mắc các lỗi từ loại tương tự trong bài viết.\n        "
+  },
+  {
+    "id": "ex9_5",
+    "type": "mcq",
+    "category": "Exercise 9: Find the Error (Tìm lỗi sai)",
+    "question": "Choose the underlined part that needs correction:<br><b>As we get older, it’s common to start worrying <u>of</u> our health and take steps to stay healthy.</b>",
+    "options": ["get", "start", "of", "healthy"],
+    "correctText": "of",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản chất lỗi sai trong câu văn:</b> Sửa giới từ 'of' thành 'about'. Động từ 'worry' luôn đi kèm cố định với giới từ 'about' tạo thành cụm 'worry about something' (lo lắng về điều gì).<br><br>\n            <b>2. Phân tích ngữ pháp các từ gạch chân khác:</b><br>\n            - Các phương án còn lại đều được chia đúng vị trí từ loại, thì thể ngữ pháp, không cần chỉnh sửa.<br><br>\n            <b>3. Cách sửa lại cho chuẩn xác 100%:</b> Học sinh cần lưu ý ghi lại cấu trúc/collocation này vào vở để tránh mắc các lỗi từ loại tương tự trong bài viết.\n        "
+  },
+  {
+    "id": "ex9_6",
+    "type": "mcq",
+    "category": "Exercise 9: Find the Error (Tìm lỗi sai)",
+    "question": "Choose the underlined part that needs correction:<br><b>It is important for parents to respond <u>appropriate</u> to their child’s emotional needs.</b>",
+    "options": ["for", "appropriate", "to", "emotional"],
+    "correctText": "appropriate",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản chất lỗi sai trong câu văn:</b> Sửa tính từ 'appropriate' thành trạng từ 'appropriately'. Vị trí này cần một trạng từ bổ nghĩa trực tiếp cho động từ hành động 'respond' (phản hồi một cách phù hợp).<br><br>\n            <b>2. Phân tích ngữ pháp các từ gạch chân khác:</b><br>\n            - Các phương án còn lại đều được chia đúng vị trí từ loại, thì thể ngữ pháp, không cần chỉnh sửa.<br><br>\n            <b>3. Cách sửa lại cho chuẩn xác 100%:</b> Học sinh cần lưu ý ghi lại cấu trúc/collocation này vào vở để tránh mắc các lỗi từ loại tương tự trong bài viết.\n        "
+  },
+  {
+    "id": "ex10_1",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>Mark ___ (1) ___ early if he ___ (1) ___ to get to Montevideo on time. (leave/ want)</b>",
+    "options": ["must leave - wants", "leaves - wanted", "must leave - want", "should left - wants"],
+    "correctText": "must leave - wants",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Mark phải rời đi sớm nếu cậu ấy muốn đến Montevideo đúng giờ.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án must leave - wants?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_2",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>If he ___ (2) ___ coming tonight, he ___ (2) ___ next week. (not be/ come)</b>",
+    "options": ["is not - may come", "won't be - comes", "isn't - should came", "not is - might come"],
+    "correctText": "is not - may come",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Nếu tối nay cậu ấy không đến, cậu ấy có thể sẽ đến vào tuần sau.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án is not - may come?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_3",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>If you ___ (3) ___ work early, you ___ (3) ___ for a drink with us. (finish/ come)</b>",
+    "options": ["finish - can come", "finishes - could came", "finished - can coming", "will finish - come"],
+    "correctText": "finish - can come",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Nếu con hoàn thành công việc sớm, con có thể đi uống nước cùng chúng tớ.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án finish - can come?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_4",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>If you ___ (4) ___ the lesson, I ___ (4) ___ you with your homework. (not understand/ help)</b>",
+    "options": ["don't understand - can help", "doesn't understand - help", "won't understand - could help", "not understand - can help"],
+    "correctText": "don't understand - can help",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Nếu con không hiểu bài học, thầy/cô có thể giúp con làm bài tập về nhà.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án don't understand - can help?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_5",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>If Jane ___ (5) ___ still ill tomorrow, she ___ (5) ___ at home. (be/ stay)</b>",
+    "options": ["is - should stay", "will be - stays", "be - ought to stay", "is - stay"],
+    "correctText": "is - should stay",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Nếu ngày mai Jane vẫn bị ốm, bạn ấy nên ở nhà nghỉ ngơi.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án is - should stay?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_6",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>If Jack ___ (6) ___ a video recorder, he ___ (6) ___ any programme he wants. (have/ record)</b>",
+    "options": ["has - can record", "have - can records", "had - must record", "will have - records"],
+    "correctText": "has - can record",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Nếu Jack có một máy ghi hình, cậu ấy có thể ghi lại bất kỳ chương trình nào mình muốn.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án has - can record?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_7",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>You ___ (7) ___ your baby to the doctor's if his temperature ___ (7) ___ up again. (take/ go)</b>",
+    "options": ["should take - goes", "must take - will go", "ought take - go", "take - goes"],
+    "correctText": "should take - goes",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Con nên đưa em bé đến gặp bác sĩ nếu nhiệt độ của bé lại tăng cao.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án should take - goes?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_8",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>If you ___ (8) ___ to see clearly, you ___ (8) ___ your glasses. (want/ wear)</b>",
+    "options": ["want - must wear", "wants - should wear", "will want - wear", "want - must wearing"],
+    "correctText": "want - must wear",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Nếu con muốn nhìn rõ ràng mọi vật, con bắt buộc phải đeo kính vào.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án want - must wear?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_9",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>___ (9) ___ I ___ (9) ___ your bike if I ___ (9) ___ it carefully. (borrow/ ride)</b>",
+    "options": ["Can I borrow - ride", "Must I borrow - rides", "Should I borrow - will ride", "Could borrow I - ride"],
+    "correctText": "Can I borrow - ride",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Tớ có thể mượn xe đạp của bạn không nếu tớ đạp nó thật cẩn thận?<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án Can I borrow - ride?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex10_10",
+    "type": "mcq",
+    "category": "Exercise 10: Supply the correct forms of the verbs",
+    "question": "Select the correct verb forms for the spaces:<br><b>If the wind ___ (10) ___ strong enough, we ___ (10) ___ sailing, but I'm not sure. (be/ go)</b>",
+    "options": ["is - might go", "will be - can go", "be - may go", "is - go"],
+    "correctText": "is - might go",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Bản dịch nghĩa câu gốc hoàn chỉnh:</b> Nếu gió đủ mạnh, chúng ta có thể sẽ đi thuyền buồm, nhưng tớ không chắc chắn lắm.<br><br>\n            <b>2. Quy tắc ngữ pháp:</b> Vận dụng linh hoạt các động từ khuyết thiếu (can, could, may, might, should, ought to, must) phối hợp trong cấu trúc mệnh đề chính của câu điều kiện loại 1.<br><br>\n            <b>3. Tại sao chọn phương án is - might go?</b> Vì cặp động từ này chia chính xác hiện tại đơn cho mệnh đề IF và khuyết thiếu chuẩn ngữ nghĩa cho mệnh đề kết quả.<br><br>\n            <b>4. Tại sao các đáp án còn lại SAI?</b> Vì chúng vi phạm các lỗi chia động từ số ít/số nhiều hoặc sử dụng sai hình thái phân từ.\n        "
+  },
+  {
+    "id": "ex11_1",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "Despite his physical disability, he ___ (1) ___ his limitations and became a professional athlete.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "overcame",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Bất chấp khuyết tật về thể chất, anh ấy đã vượt qua (overcame) những hạn chế của mình và trở thành một vận động viên chuyên nghiệp.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn overcame?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_2",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "If you ___ (2) ___ on positive thoughts, you may experience a greater sense of joy in your daily life.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "concentrate",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Nếu con tập trung (concentrate on) vào những suy nghĩ tích cực, con có thể trải nghiệm cảm giác vui vẻ lớn hơn.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn concentrate?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_3",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "Thanks to careful planning, the company ___ (3) ___ to host a successful event last month.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "managed",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Nhờ có sự lên kế hoạch cẩn thận, công ty đã xoay sở/thành công (managed to) tổ chức một sự kiện đại thắng tháng trước.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn managed?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_4",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "A regular exercise ___ (4) ___ will keep your body strong and energized.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "routine",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Một thói quen tập thể dục (exercise routine) đều đặn sẽ giữ cho cơ thể con khỏe mạnh và tràn đầy năng lượng.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn routine?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_5",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "By breaking down tasks into smaller steps, you can boost your ___ (5) ___.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "productivity",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Bằng cách chia nhỏ các nhiệm vụ thành các bước nhỏ hơn, con có thể nâng cao năng suất (productivity) làm việc.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn productivity?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_6",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "___ (6) ___ openly with your doctor can help create a great detailed plan for a healthier lifestyle.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "Communicating",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Việc giao tiếp/trao đổi (Communicating) cởi mở với bác sĩ của con có thể giúp tạo ra một kế hoạch chi tiết tuyệt vời.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn Communicating?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_7",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "___ (7) ___ your goals requires a lot of factors including determination, patience, and careful planning.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "Accomplishing",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Việc hoàn thành/đạt được (Accomplishing) các mục tiêu đòi hỏi rất nhiều yếu tố bao gồm sự quyết tâm và kiên nhẫn.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn Accomplishing?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_8",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "Constantly comparing yourself to others can lead to ___ (8) ___ feelings of self-doubt.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "negative",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Việc liên tục so sánh bản thân với người khác có thể dẫn đến những cảm xúc tiêu cực (negative feelings) về sự tự hoài nghi.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn negative?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_9",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "As a student, it’s important to give ___ (9) ___ to your academic responsibilities and arrange enough time for studying.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "priority",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Là một học sinh, điều quan trọng là phải dành sự ưu tiên (give priority to) cho các trách nhiệm học tập của mình.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn priority?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex11_10",
+    "type": "gap_fill",
+    "category": "Exercise 11: Complete sentences with word forms from box",
+    "question": "If you dress ___ (10) ___ for a job interview, you may make a good impression.",
+    "options": ["concentrate", "communicating", "priority", "routine", "negative", "appropriately", "managed", "productivity", "overcame", "accomplishing"],
+    "correctText": "appropriately",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch nghĩa toàn câu văn:</b> Nếu con ăn mặc một cách phù hợp (dress appropriately) cho một buổi phỏng vấn xin việc, con có thể tạo ấn tượng rất tốt.<br><br>\n            <b>2. Từ loại và hình thái cần điền:</b> Xác định danh từ, động từ chia thì quá khứ/hiện tại, trạng từ hay tính từ ghép phù hợp vị trí.<br><br>\n            <b>3. Tại sao chọn appropriately?</b> Vì nó biến đổi đúng ngữ pháp cấu trúc câu (Ví dụ: danh từ đứng đầu làm chủ ngữ dạng V-ing, hoặc chia thì quá khứ đơn vì có 'last month').<br><br>\n            <b>4. Tại sao các từ khác sai?</b> Điền các từ khác vào sẽ gây mâu thuẫn từ loại hoặc tạo ngữ nghĩa bất hợp lý.\n        "
+  },
+  {
+    "id": "ex12_1",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Prioritizing moments of ___ (1) ___, like practicing mindfulness or taking breaks, supports mental health. (relax)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "relaxation",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Việc ưu tiên những khoảnh khắc thư giãn (relaxation - danh từ sau giới từ 'of'), như thực hành chánh niệm, sẽ hỗ trợ sức khỏe tinh thần cực tốt.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_2",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Attempts are being made to ___ (2) ___ the problem of security in schools. (resolved)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "resolve",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Các nỗ lực đang được thực hiện để giải quyết (resolve - động từ nguyên mẫu sau cấu trúc 'to V') vấn đề an ninh tại các trường học.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_3",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Encouraging an ___ (3) ___ approach to making nutritious food choices helps teens develop lifelong habits. (depend)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "independent",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Khuyến khích một cách tiếp cận độc lập/tự chủ (independent - tính từ đứng trước bổ nghĩa cho danh từ approach) giúp các con tự lập.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_4",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "To improve focus and ___ (4) ___, consider creating a quiet study space free from distractions. (concentrate)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "concentration",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Để cải thiện sự tập trung và khả năng chú ý (concentration - danh từ đứng sau liên từ 'and' đồng bộ với danh từ 'focus'), hãy tạo không gian yên tĩnh.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_5",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Teens often feel ___ (5) ___ when they achieve their fitness goals or maintain a healthy lifestyle. (delight)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "delighted",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Các bạn trẻ thường cảm thấy rất vui mừng/hạnh phúc (delighted - tính từ đuôi -ed chỉ cảm xúc con người đứng sau động từ liên kết feel).<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_6",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Regular exercise can enhance self-esteem and ___ (6) ___ in teenagers. (confident)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "confidence",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Tập thể dục đều đặn có thể nâng cao lòng tự trọng và sự tự tin (confidence - danh từ đứng sau động từ chính 'enhance').<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_7",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Your teen can maintain an active lifestyle by ___ (7) ___ yoga and meditation. (practice)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "practising",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Con của bạn có thể duy trì lối sống tích cực bằng cách thực hành (practising - động từ dạng V-ing đứng ngay sau giới từ 'by').<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_8",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "My first ___ (8) ___ of smoking was terrible. (impress)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "impression",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Ấn tượng (impression - danh từ đóng vai trò chủ ngữ chính đứng sau tính từ sở hữu 'my first') đầu tiên của tớ về việc hút thuốc rất tồi tệ.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_9",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Cigarettes contain nicotine, an ___ (9) ___ chemical that affects the body and the mind and keeps people hooked. (addict)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "addictive",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Thuốc lá chứa nicotine, một chất hóa học gây nghiện (addictive - tính từ đứng trước danh từ chemical để bổ nghĩa tính chất).<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_10",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "Learning to self-care is so important to meet their basic needs and be ___ (10) ___ and mentally healthy. (physic)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "physically",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Học cách tự chăm sóc bản thân là rất quan trọng để đáp ứng nhu cầu cơ bản và khỏe mạnh về cả thể chất (physically - trạng từ bổ nghĩa cho tính từ healthy đồng bộ với mentally).<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_11",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "___ (11) ___ your teen in physical activities regularly is crucial for their overall health and well-being. (Encourage)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "encouraging",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Khuyến khích (Encouraging - danh động từ đứng đầu câu làm chủ ngữ số ít) con bạn tham gia các hoạt động thể chất là cực kỳ cốt lõi.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_12",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "___ (12) ___ and teenage years are the best time to develop healthy habits since young people are easier to mold. (Child)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "childhood",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Thời thơ ấu (Childhood - danh từ chỉ giai đoạn cuộc đời kết hợp song hành với cụm từ 'teenage years') và tuổi niên thiếu là thời gian tốt nhất.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_13",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "You should encourage healthy habits in your ___ (13) ___. (teen)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "teenagers",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Con nên khuyến khích các thói quen lành mạnh ở những đứa con tuổi thiếu niên của mình (teenagers - danh từ chỉ người số nhiều).<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  },
+  {
+    "id": "ex12_14",
+    "type": "gap_fill",
+    "category": "Exercise 12: Word Form (Biến đổi hình thái từ)",
+    "question": "___ (14) ___ is another physical activity teens can incorporate into their daily routine. (Gym)",
+    "options": ["relaxation", "resolve", "independent", "concentration", "delighted", "confidence", "practising", "impression", "addictive", "physically", "encouraging", "childhood", "teenagers", "gymnastics"],
+    "correctText": "gymnastics",
+    "explanation": "\n            <div class=\"exp-title\">🌟 MS LÊ HẰNG ENGLISH GIẢI THÍCH CHI TIẾT 🌟</div>\n            <b>1. Dịch câu gốc và phân tích từ loại:</b> Môn thể dục dụng cụ (Gymnastics - danh từ chỉ môn thể thao làm chủ ngữ chính đứng trước động từ số ít 'is') là một hoạt động thể chất tuyệt vời.<br><br>\n            <b>2. Dấu hiệu nhận biết ngữ pháp:</b> Xác định chính xác vị trí đứng sau giới từ, đứng trước danh từ, làm chủ ngữ chính hay trạng từ bổ trợ tính từ để biến đổi gốc từ trong ngoặc đơn chuẩn xác.<br><br>\n            <b>3. Tại sao chọn hình thái này?</b> Chuẩn chỉnh cấu tạo từ của Unit 1-2 lớp 9.<br><br>\n            <b>4. Lưu ý thêm:</b> Học sinh học kĩ bảng gia đình từ (Word Family) để giành trọn điểm thi trên giấy nhé.\n        "
+  }
+];
+
+        let userAnswers = {};
+        let currentActiveGapBlank = null;
+        let shuffledQuestions = [];
+        let audioCtxInstance = null;
+
+        function initAudio() {
+            if (!audioCtxInstance) { audioCtxInstance = new (window.AudioContext || window.webkitAudioContext)(); }
+        }
+
+        function playSound(type) {
+            try {
+                initAudio();
+                const ctx = audioCtxInstance;
+                const now = ctx.currentTime;
+                if (type === 'correct') {
+                    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now + 0.35);
+                } else {
+                    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+                    osc.type = 'triangle'; osc.frequency.setValueAtTime(261.63, now);
+                    osc.frequency.setValueAtTime(220.00, now + 0.1); osc.frequency.setValueAtTime(174.61, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now + 0.4);
+                }
+            } catch(e) {}
+        }
+
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            let particles = [];
+            const palette = ['#FFC107', '#FF5722', '#E91E63', '#9C27B0', '#00BCD4', '#00D26A', '#FF4757'];
+            for (let i = 0; i < 70; i++) {
+                particles.push({
+                    x: window.innerWidth / 2, y: window.innerHeight / 2,
+                    size: Math.random() * 6 + 5, color: palette[Math.floor(Math.random() * palette.length)],
+                    speedX: Math.random() * 12 - 6, speedY: Math.random() * -12 - 4,
+                    gravity: 0.35, rotation: Math.random() * 360, rotationSpeed: Math.random() * 8 - 4, opacity: 1
+                });
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let live = false;
+                particles.forEach(p => {
+                    p.speedY += p.gravity; p.x += p.speedX; p.y += p.speedY; p.rotation += p.rotationSpeed;
+                    if (p.y < canvas.height && p.opacity > 0) {
+                        live = true; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180);
+                        ctx.fillStyle = p.color; ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); ctx.restore();
+                    }
+                });
+                if (live) requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function initQuiz() {
+            shuffledQuestions = originalQuestions.map(q => {
+                return { ...q, shuffledOptions: shuffleArray(q.options) };
+            });
+            renderQuiz();
+            updateProgressBar();
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-cards-wrapper');
+            container.innerHTML = '';
+            shuffledQuestions.forEach((q, idx) => {
+                const card = document.createElement('div');
+                card.className = 'quiz-card';
+                card.id = `card-q-${q.id}`;
+                let innerHTML = `<div class="category-badge">${q.category} - Câu ${idx + 1}</div>`;
+
+                if (q.type === 'gap_fill') {
+                    let baseText = q.question;
+                    let replacedText = baseText.replace("___ (1) ___", "______")
+                                               .replace("___ (2) ___", "______")
+                                               .replace("___ (3) ___", "______")
+                                               .replace("___ (4) ___", "______")
+                                               .replace("___ (5) ___", "______")
+                                               .replace("___ (6) ___", "______")
+                                               .replace("___ (7) ___", "______")
+                                               .replace("___ (8) ___", "______")
+                                               .replace("___ (9) ___", "______")
+                                               .replace("___ (10) ___", "______")
+                                               .replace("___ (11) ___", "______")
+                                               .replace("___ (12) ___", "______")
+                                               .replace("___ (13) ___", "______")
+                                               .replace("___ (14) ___", "______")
+                                               .replace("______", `<span id="blank-q-${q.id}" class="gap-blank" onclick="openGapPopup(this, '${q.id}')">???</span>`);
+                    innerHTML += `<div class="gap-sentence">${replacedText}</div>`;
+                } else {
+                    innerHTML += `<div class="question-text">${q.question}</div>`;
+                }
+
+                innerHTML += `<div class="options-grid">`;
+                q.shuffledOptions.forEach((opt, oIdx) => {
+                    const prefix = String.fromCharCode(65 + oIdx);
+                    innerHTML += `
+                        <button class="option-btn" data-opt-text="${opt.replace(/"/g, '&quot;')}" onclick="handleSelectOption(this, '${q.id}', '${opt.replace(/'/g, "\\'")}')">
+                            <span class="option-prefix">${prefix}</span>
+                            <span class="option-body-text">${opt}</span>
+                        </button>
+                    `;
+                });
+                innerHTML += `</div>`;
+                innerHTML += `<div class="explanation-box" id="explanation-${q.id}">${q.explanation}</div>`;
+                card.innerHTML = innerHTML;
+                container.appendChild(card);
+            });
+        }
+
+        function handleSelectOption(btnElement, qId, selectedText) {
+            if (userAnswers[qId]) return;
+            const currentQuestion = shuffledQuestions.find(q => q.id === qId);
+            const isCorrect = (selectedText === currentQuestion.correctText);
+            userAnswers[qId] = { selected: selectedText, correct: isCorrect };
+
+            const card = document.getElementById(`card-q-${qId}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.getAttribute('data-opt-text') === currentQuestion.correctText) { btn.classList.add('correct'); }
+            });
+
+            if (isCorrect) {
+                btnElement.classList.add('correct'); playSound('correct'); triggerConfetti();
+            } else {
+                btnElement.classList.add('wrong'); card.classList.add('shake'); playSound('wrong');
+                setTimeout(() => card.classList.remove('shake'), 400);
+            }
+            document.getElementById(`explanation-${qId}`).style.display = 'block';
+            updateProgressBar();
+        }
+
+        function openGapPopup(blankElement, qId) {
+            if (userAnswers[qId]) return;
+            currentActiveGapBlank = blankElement;
+            const currentQuestion = shuffledQuestions.find(q => q.id === qId);
+            const popupContainer = document.getElementById('popup-options-container');
+            popupContainer.innerHTML = '';
+            currentQuestion.shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'popup-opt-btn';
+                btn.innerHTML = opt;
+                btn.onclick = () => selectGapValue(qId, opt);
+                popupContainer.appendChild(btn);
+            });
+            document.getElementById('gap-popup').style.display = 'flex';
+        }
+
+        function selectGapValue(qId, selectedText) {
+            document.getElementById('gap-popup').style.display = 'none';
+            const currentQuestion = shuffledQuestions.find(q => q.id === qId);
+            const isCorrect = (selectedText === currentQuestion.correctText);
+            userAnswers[qId] = { selected: selectedText, correct: isCorrect };
+
+            const blank = currentActiveGapBlank;
+            blank.innerHTML = selectedText;
+            if (isCorrect) {
+                blank.className = "gap-blank filled-correct"; playSound('correct'); triggerConfetti();
+            } else {
+                blank.className = "gap-blank filled-wrong";
+                const card = document.getElementById(`card-q-${qId}`);
+                card.classList.add('shake'); playSound('wrong');
+                setTimeout(() => card.classList.remove('shake'), 400);
+            }
+
+            const cardElement = document.getElementById(`card-q-${qId}`);
+            cardElement.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.getAttribute('data-opt-text') === currentQuestion.correctText) btn.classList.add('correct');
+                else if (btn.getAttribute('data-opt-text') === selectedText) btn.classList.add('wrong');
+            });
+
+            document.getElementById(`explanation-${qId}`).style.display = 'block';
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const percent = (Object.keys(userAnswers).length / shuffledQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${percent}%`;
+        }
+
+        function showFinalScore() {
+            const total = shuffledQuestions.length;
+            let correctCount = 0;
+            Object.keys(userAnswers).forEach(qId => { if (userAnswers[qId].correct) correctCount++; });
+            const percentage = (correctCount / total) * 100;
+            let comment = "";
+
+            if (percentage < 50) {
+                comment = "Điểm lần này chưa cao lắm, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!";
+            } else if (percentage >= 60 && percentage <= 80) {
+                comment = "Con đã có tiến bộ khá ổn rồi, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!";
+            } else {
+                comment = "Làm tốt lắm, con cố gắng ring điểm 10 ở lần sau nha!";
+            }
+
+            document.getElementById('score-text').innerHTML = `${correctCount} / ${total}`;
+            document.getElementById('comment-text').innerHTML = `<b>Ms Lê Hằng nhận xét:</b><br>"${comment}"`;
+            document.getElementById('result-modal').style.display = 'flex';
+        }
+
+        function closeResultModal() { document.getElementById('result-modal').style.display = 'none'; }
+
+        window.onload = () => { initQuiz(); };
+    </script>
+</body>
+</html>
